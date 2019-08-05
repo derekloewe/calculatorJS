@@ -1,17 +1,51 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>title</title>
-  <meta name="author" content="name">
-  <meta name="description" content="description here">
-  <meta name="keywords" content="keywords,here">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Calculator</title>
+    <meta name="author" content="name">
+    <meta name="description" content="description here">
+    <meta name="keywords" content="keywords,here">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css" type="text/css">
     <link rel="stylesheet" href="style.css" type="text/css">
-  </head>
-  <body>
-  <h1>Calculator</h1>
-    <script src="calc.js"></script>
-  </body>
+</head>
+
+<body>
+    <div id="wrapper">
+
+        <div id="calcWrap">
+            <!-- <h1>Calculator</h1> -->
+            <div id="calcDisplay">
+                <input id="calcInput" class=" Normal input is-large" type="text" value="" readonly>
+            </div>
+            <div class="calcButtons">
+                <button type="button" class="calcButton clear" id="buttonCE" value="ce">CE</button>
+                <button type="button" class="calcButton clearAll" id="buttonC" value="clear">C</button>
+                <button type="button" class="calcButton back" id="buttonBack" value="back">Back</button>
+                <button type="button" class="calcButton operator" id="buttonDivide" value="/">&divide;</button>
+                <button type="button" class="calcButton operator" id="buttonTimes" value="*">&times;</button>
+                <button type="button" class="calcButton operator" id="buttonPlus" value="+">+</button>
+                <button type="button" class="calcButton operator" id="buttonMinus" value="-">-</button>
+                <button type="button" class="calcButton operator" id="buttonEqual" value="=">=</button>
+                <button type="button" class="calcButton decimal" id="buttonDot" value=".">.</button>
+                <button type="button" class="calcButton" id="button9" value="9">9</button>
+                <button type="button" class="calcButton" id="button8" value="8">8</button>
+                <button type="button" class="calcButton" id="button7" value="7">7</button>
+                <button type="button" class="calcButton" id="button6" value="6">6</button>
+                <button type="button" class="calcButton" id="button5" value="5">5</button>
+                <button type="button" class="calcButton" id="button4" value="4">4</button>
+                <button type="button" class="calcButton" id="button3" value="3">3</button>
+                <button type="button" class="calcButton" id="button2" value="2">2</button>
+                <button type="button" class="calcButton" id="button1" value="1">1</button>
+                <button type="button" class="calcButton" id="button0" value="0">0</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="calc1.js"></script>
+</body>
+
 </html>
