@@ -25,7 +25,7 @@ const ops = {
 function updateDisplay() {
     const display = document.getElementById("calcInput");
     display.value = calculator.displayValue;
-}
+    document.getElementById("calcOp").innerHTML = calculator.firstOperand + calculator.operator;}
 
 function inputDigit(digit) {
     const {
@@ -59,7 +59,10 @@ function resetCalculator() {
 }
 
 function backCalculator() {
-    calculator.displayValue = calculator.displayValue.slice(0, -1);
+    if (calculator.operator == null) {
+        calculator.displayValue = calculator.displayValue.slice(0, -1);
+    }
+
 }
 
 function clearCalculator() {
@@ -76,7 +79,7 @@ function handleOperator(nextOperator) {
 
     if (operator && calculator.waitingForSecondOperand) {
         calculator.operator = nextOperator;
-        console.log(calculator);
+        //console.log(calculator);
         return;
     }
 
@@ -96,56 +99,6 @@ function handleOperator(nextOperator) {
 }
 
 const keys = document.querySelector('.calcButtons');
-/* keys.addEventListener('click', (event) => {
-    const {
-        target
-    } = event;
-    if (!target.matches('button')) {
-        return;
-    }
-
-    if (target.classList.contains('operator')) {
-        console.log('operator', target.value);
-        handleOperator(target.value);
-        updateDisplay();
-        return;
-        
-    }
-
-    if (target.classList.contains('decimal')) {
-        console.log('decimal', target.value);
-        inputDecimal(target.value);
-        updateDisplay();
-        return;
-    }
-
-    if (target.classList.contains('back')) {
-        console.log('back', target.value);
-        backCalculator();
-        updateDisplay();
-        return;
-    }
-
-    if (target.classList.contains('clear')) {
-        console.log('clear', target.value);
-        clearCalculator();
-        updateDisplay();
-        return;
-    }
-
-    if (target.classList.contains('clearAll')) {
-        console.log('clearAll', target.value);
-        resetCalculator();
-        updateDisplay();
-        return;
-    }
-    console.log('digit', target.value);
-
-    inputDigit(target.value);
-    updateDisplay();
-}); */
-
-
 
 function calcOperations(event) {
     const {
@@ -156,7 +109,7 @@ function calcOperations(event) {
     }
 
     if (target.classList.contains('operator')) {
-        console.log('operator', target.value);
+        //console.log('operator', target.value);
         handleOperator(target.value);
         updateDisplay();
         return;
@@ -164,28 +117,28 @@ function calcOperations(event) {
     }
 
     if (target.classList.contains('decimal')) {
-        console.log('decimal', target.value);
+        //console.log('decimal', target.value);
         inputDecimal(target.value);
         updateDisplay();
         return;
     }
 
     if (target.classList.contains('back')) {
-        console.log('back', target.value);
+        //console.log('back', target.value);
         backCalculator();
         updateDisplay();
         return;
     }
 
     if (target.classList.contains('clear')) {
-        console.log('clear', target.value);
+        //console.log('clear', target.value);
         clearCalculator();
         updateDisplay();
         return;
     }
 
     if (target.classList.contains('clearAll')) {
-        console.log('clearAll', target.value);
+        //console.log('clearAll', target.value);
         resetCalculator();
         updateDisplay();
         return;
@@ -197,12 +150,12 @@ function calcOperations(event) {
 
 }
 
-function test(e) {
+function keysPressed(e) {
     let key = e || window.event;
     let charCode = key.keyCode || key.which || key.charCode;
     let charStr = String.fromCharCode(charCode);
 
-    console.log(e);
+    //console.log(e);
     //console.log(key);
     //console.log(charCode);
     switch (charCode) {
@@ -216,7 +169,7 @@ function test(e) {
         case 55:
         case 56:
         case 57:
-            console.log(e.key)
+            //console.log(e.key)
             divButton = "button" + e.key;
             buttonPresed(divButton, e.key);
             inputDigit(e.key);
@@ -274,12 +227,12 @@ function test(e) {
     }
 }
 
-function test2(e) {
+function specialKeys(e) {
     let key = e || window.event;
     let charCode = key.keyCode || key.which || key.charCode;
     let charStr = String.fromCharCode(charCode);
 
-    console.log(e);
+    //console.log(e);
     //console.log(key);
     //console.log(charCode);
     switch (key.key) {
@@ -299,14 +252,14 @@ function test2(e) {
             clearCalculator();
             updateDisplay();
             break;
- //Clear
- case "Delete":
-        keyValue = "C";
-        divButton = "buttonC";
-        buttonPresed(divButton, e.key);
-        resetCalculator();
-        updateDisplay();
-        break;
+            //Clear
+        case "Delete":
+            keyValue = "C";
+            divButton = "buttonC";
+            buttonPresed(divButton, e.key);
+            resetCalculator();
+            updateDisplay();
+            break;
 
         default:
 
@@ -329,5 +282,5 @@ function buttonPresed(divButton, key) {
 }
 
 keys.addEventListener('click', calcOperations);
-document.addEventListener('keypress', test);
-document.addEventListener('keydown', test2);
+document.addEventListener('keypress', keysPressed);
+document.addEventListener('keydown', specialKeys);
