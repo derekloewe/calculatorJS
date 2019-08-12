@@ -3,6 +3,7 @@ const calculator = {
     firstOperand: null,
     waitingForSecondOperand: false,
     operator: null,
+    clearDisplay: false,
 };
 
 const performCalculation = {
@@ -22,10 +23,35 @@ const ops = {
     'Enter': (test) => 'Equal'
 };
 
+function pushToStorage(){
+    
+}
+
 function updateDisplay() {
     const display = document.getElementById("calcInput");
-    display.value = calculator.displayValue;
-    document.getElementById("calcOp").innerHTML = calculator.firstOperand + calculator.operator;}
+    
+    if (calculator.operator == "Enter" || calculator == "=") {
+        document.getElementById("calcOp").innerHTML = calculator.firstOperand;
+        display.value = calculator.displayValue;
+        console.log("enter: "+calculator.firstOperand )
+    } else if(calculator.operator == "+" || calculator.operator == "-" || calculator.operator == "/" || calculator.operator == "*" ){
+        document.getElementById("calcOp").innerHTML = calculator.firstOperand + calculator.operator;
+        console.log("OP1: "+ calculator.firstOperand + calculator.operator )
+        if(calculator.waitingForSecondOperand){
+           // display.value = "";
+
+        }
+        
+    }else {
+        document.getElementById("calcOp").innerHTML = calculator.firstOperand + (calculator.operator)? calculator.operator : "" + calculator.displayValue;
+        display.value = calculator.displayValue;
+        console.log("OP2: "+ calculator.firstOperand + calculator.operator + calculator.displayValue )
+    }
+
+
+}
+
+
 
 function inputDigit(digit) {
     const {
@@ -55,6 +81,7 @@ function resetCalculator() {
     calculator.firstOperand = null;
     calculator.waitingForSecondOperand = false;
     calculator.operator = null;
+    calculator.clearDisplay = false;
     //console.log(calculator);
 }
 
@@ -112,6 +139,7 @@ function calcOperations(event) {
         //console.log('operator', target.value);
         handleOperator(target.value);
         updateDisplay();
+        //calculator.displayValue = "";
         return;
 
     }
