@@ -1,8 +1,3 @@
-body{
-   /*  background-color: darkgreen; */
-    
-}
-
 #wrapper {
     display: flex;
     align-items: center;
@@ -143,16 +138,40 @@ body{
     margin:3px;
 }
 
-#calcHistory{
-    height: 10vw;
-    background: darkslategrey;
-    width: 10vW;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    color: white;
-}
 
-#calcHistory > h3{
+#calcHistoryText > h3{
     text-align: center;
     font-weight: bold;
+}
+
+#calcHistoryShow{
+    color:white;
+    background-color: darkslategray;
+    width: 15px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+#calcHistoryShow.showHistory{
+    float: right;
+    right:-15px;
+    position: relative;
+    background-color: darkslategray;
+    width: 15px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    top:-55px;
+}
+
+/* #calcHistoryShow.hideHistory{
+    width: 0px
+} */
+#calcHistoryText{
+    display: none;
+    background-color: darkslategray;
+    color:white;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    width: 10vw;
+    height: 100px;
+    
 }

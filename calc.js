@@ -1,9 +1,12 @@
 const calculator = {
     displayValue: '0',
     firstOperand: null,
+    secondOperand: null,
     waitingForSecondOperand: false,
     operator: null,
     clearDisplay: false,
+    fullString: '',
+    history: false
 };
 
 const performCalculation = {
@@ -23,31 +26,37 @@ const ops = {
     'Enter': (test) => 'Equal'
 };
 
-function pushToStorage(){
-    
+function pushToStorage() {
+
 }
 
 function updateDisplay() {
     const display = document.getElementById("calcInput");
-    
+
     if (calculator.operator == "Enter" || calculator == "=") {
         document.getElementById("calcOp").innerHTML = calculator.firstOperand;
         display.value = calculator.displayValue;
-        console.log("enter: "+calculator.firstOperand )
-    } else if(calculator.operator == "+" || calculator.operator == "-" || calculator.operator == "/" || calculator.operator == "*" ){
-        document.getElementById("calcOp").innerHTML = calculator.firstOperand + calculator.operator;
-        console.log("OP1: "+ calculator.firstOperand + calculator.operator )
-        if(calculator.waitingForSecondOperand){
-           // display.value = "";
-
+        calculator.fullString += calculator.firstOperand;
+        console.log("enter: " + calculator.firstOperand);
+    } else if (calculator.operator == "+" || calculator.operator == "-" || calculator.operator == "/" || calculator.operator == "*") {
+        //document.getElementById("calcOp").innerHTML = calculator.firstOperand + calculator.operator;
+        if (calculator.displayValue == calculator.firstOperand) {
+            document.getElementById("calcOp").innerHTML = calculator.firstOperand + calculator.operator;
+        } else {
+            document.getElementById("calcOp").innerHTML = calculator.firstOperand + calculator.operator + calculator.displayValue;
+            display.value = calculator.displayValue;
         }
-        
-    }else {
-        document.getElementById("calcOp").innerHTML = calculator.firstOperand + (calculator.operator)? calculator.operator : "" + calculator.displayValue;
-        display.value = calculator.displayValue;
-        console.log("OP2: "+ calculator.firstOperand + calculator.operator + calculator.displayValue )
-    }
+        //calculator.fullString += calculator.operator;
+        //console.log("OP1: "+ calculator.firstOperand + calculator.operator );
+        calculator.fullString += calculator.firstOperand + calculator.operator;
 
+    } else {
+        document.getElementById("calcOp").innerHTML = calculator.firstOperand + (calculator.operator) ? calculator.operator : "" + calculator.displayValue;
+        display.value = calculator.displayValue;
+        console.log("OP2: " + !calculator.firstOperand ? calculator.firstOperand: "" + calculator.operator + calculator.displayValue);
+        calculator.fullString += calculator.firstOperand;
+    }
+    // document.getElementById("calcOp").innerHTML = calculator.firstOperand + calculator.operator + calculator.displayValue;
 
 }
 
@@ -66,6 +75,7 @@ function inputDigit(digit) {
         calculator.displayValue = displayValue === '0' ? digit : displayValue + digit;
     }
     //console.log(calculator);
+
 }
 
 function inputDecimal(dot) {
@@ -100,13 +110,17 @@ function handleOperator(nextOperator) {
     const {
         firstOperand,
         displayValue,
-        operator
+        operator,
+        clearDisplay,
+        fullString,
+        secondOperand
     } = calculator;
     const inputValue = parseFloat(displayValue);
 
     if (operator && calculator.waitingForSecondOperand) {
         calculator.operator = nextOperator;
-        //console.log(calculator);
+        console.log(calculator);
+        document.getElementById("calcOp").innerHTML = calculator.firstOperand + calculator.operator + calculator.displayValue;
         return;
     }
 
@@ -115,13 +129,17 @@ function handleOperator(nextOperator) {
     } else if (operator) {
         const currentValue = firstOperand || 0;
         const result = performCalculation[operator](firstOperand, inputValue);
-
+        document.getElementById("calcOp").innerHTML = calculator.firstOperand + calculator.operator + calculator.displayValue;
         calculator.displayValue = String(result);
         calculator.firstOperand = result;
+        //calculator.fullString = String(result);
     }
+    if(secondOperand === null){
 
+    }
     calculator.waitingForSecondOperand = true;
     calculator.operator = nextOperator;
+
     //console.log(calculator);
 }
 
@@ -312,3 +330,28 @@ function buttonPresed(divButton, key) {
 keys.addEventListener('click', calcOperations);
 document.addEventListener('keypress', keysPressed);
 document.addEventListener('keydown', specialKeys);
+
+//Show Hide History
+function hideShowhistory(e) {
+    if (calculator.history) {
+        document.getElementById("calcHistoryText").style.display = "none";
+        document.getElementById("calcHistory").style.width = "0px";
+        calculator.history = false;
+        document.getElementById("calcHistoryShow").classList.remove("showHistory");
+        document.getElementById("calcHistoryShow").classList.add("hideHistory");
+    } else {
+        document.getElementById("calcHistoryText").style.display = "block";
+        document.getElementById("calcHistory").style.width = "10vw";
+        calculator.history = true;
+        document.getElementById("calcHistoryShow").classList.remove("hideHistory");
+        document.getElementById("calcHistoryShow").classList.add("showHistory");
+    }
+
+}
+
+
+//historyState = document.getElementById("calcHistoryShow");
+//historyState.addEventListener('click', hideShowhistory);
+document.getElementById("calcHistoryShow").onclick = function () {
+    hideShowhistory();
+};
